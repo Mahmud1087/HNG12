@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Card</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <p id="currentTimeUTC" data-testid="currentTimeUTC"></p>
+    <div class="profile-card">
+      <div class="profile-header">
+        <img
+          src="./images/image.jpg"
+          alt="Profile Picture"
+          class="profile-img"
+          data-testid="profilePicture"
+        />
+        <div class="profile-card-links">
+          <p class="profile-location" data-testid="currentLocation">
+            <i class="bi bi-geo-alt"></i> Kano, Nigeria
+          </p>
+          <p class="profile-email">
+            <i class="bi bi-envelope"></i>
+            <a href="mailto:abdulazeezm578@gmail.com" data-testid="emailAddress"
+              >abdulazeezm578@gmail.com</a
+            >
+          </p>
+        </div>
+      </div>
+      <div class="profile-info">
+        <h2 class="profile-name" data-testid="fullName">Abdulazeez Mahmud</h2>
+        <p class="profile-title" data-testid="jobTitle">Frontend Developer</p>
+        <p class="profile-bio" data-testid="shortBio">
+          I am a passionate frontend developer with a focus on creating engaging
+          and responsive user interfaces. My experience includes working with
+          HTML, CSS, JavaScript, React.js, and Next.js to build dynamic web
+          applications. I enjoy problem-solving, learning new technologies, and
+          collaborating on projects that make a difference. I aim to
+          continuously improve and create interfaces that users love to interact
+          with.
+        </p>
+        <div class="social-links" data-testid="socialLinks">
+          <a href="https://github.com/Mahmud1087" target="_blank"
+            ><i class="bi bi-github"></i
+          ></a>
+          <a
+            href="https://www.linkedin.com/in/enesifrontenddev/"
+            target="_blank"
+            ><i class="bi bi-linkedin"></i
+          ></a>
+          <a href="https://x.com/MahmudEnesi" target="_blank"
+            ><i class="bi bi-twitter"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
