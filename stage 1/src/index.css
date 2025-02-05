@@ -13,3 +13,156 @@
 a {
   text-decoration: inherit;
 }
+
+.container {
+  width: 90%;
+  max-width: 25rem;
+  margin: 0 auto;
+}
+
+.game-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.game-instructions {
+  margin: 2rem 0;
+}
+
+.game-instructions h2 span {
+  color: #4caf50;
+  text-decoration: underline;
+}
+
+.score-rounds {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.colors {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 17rem;
+}
+
+.color-box {
+  width: 15rem;
+  height: 100%;
+  transition: background-color 0.5s ease;
+  box-shadow: 5px 10px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+}
+
+.color-button {
+  width: 5rem;
+  height: 100%;
+  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.5s ease, transform 0.06s ease-in-out;
+}
+
+.color-button:active {
+  transform: scale(1.1);
+}
+
+.status {
+  font-size: 18px;
+  margin: 10px 0;
+  opacity: 0;
+}
+
+.status.correct {
+  color: green;
+  opacity: 0;
+  animation: fadeInOut 5s ease-in-out;
+}
+
+.status.wrong {
+  color: red;
+  opacity: 0;
+  animation: fadeInOut 5s ease-in-out;
+}
+
+.new-game {
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.753);
+  color: white;
+  cursor: pointer;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.new-game {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.03s ease-in-out;
+}
+
+.modal.show {
+  opacity: 1;
+}
+
+.modal-content {
+  background: white;
+  padding: 3rem 20px;
+  border-radius: 10px;
+  width: 25rem;
+  text-align: center;
+  transform: scale(0.8);
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal.show .modal-content {
+  transform: scale(1);
+}
+
+.modal-content button {
+  margin-top: 20px;
+  font-size: 14px;
+}
