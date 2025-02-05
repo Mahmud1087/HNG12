@@ -6,6 +6,20 @@ const getRandomHexColor = () => {
     .padStart(6, '0')}`;
 };
 
+const adjustColorBrightness = (color, factor) => {
+  let r = parseInt(color.slice(1, 3), 16);
+  let g = parseInt(color.slice(3, 5), 16);
+  let b = parseInt(color.slice(5, 7), 16);
+
+  r = Math.min(255, Math.max(0, r + factor));
+  g = Math.min(255, Math.max(0, g + factor));
+  b = Math.min(255, Math.max(0, b + factor));
+
+  return `#${r.toString(16).padStart(2, '0')}${g
+    .toString(16)
+    .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+};
+
 const ColorGame = () => {
   const [targetColor, setTargetColor] = useState(getRandomHexColor());
   const [options, setOptions] = useState([]);
@@ -22,13 +36,16 @@ const ColorGame = () => {
 
   const generateOptions = () => {
     let colors = [targetColor];
-    while (colors.length < 6) {
-      const newColor = getRandomHexColor();
-      if (!colors.includes(newColor)) {
-        colors.push(newColor);
-      }
+
+    const numShades = 5;
+    for (let i = 1; i <= numShades; i++) {
+      const lighter = adjustColorBrightness(targetColor, i * 30);
+      const darker = adjustColorBrightness(targetColor, -i * 30);
+      if (!colors.includes(lighter)) colors.push(lighter);
+      if (!colors.includes(darker)) colors.push(darker);
     }
-    setOptions(shuffleArray(colors));
+
+    setOptions(shuffleArray(colors.slice(0, 6)));
   };
 
   const shuffleArray = (array) => {
