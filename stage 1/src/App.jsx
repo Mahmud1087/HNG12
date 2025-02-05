@@ -55,13 +55,13 @@ const ColorGame = () => {
   const handleGuess = (color) => {
     if (rounds > 1) {
       if (color === targetColor) {
-        setStatus('Correct!');
+        setStatus('Correct! ✅🎉');
         setScore((prev) => prev + 1);
         setAnimateStatus('correct');
         setTimeout(() => setAnimateStatus(''), 2000);
         setTargetColor(getRandomHexColor());
       } else {
-        setStatus('Wrong!');
+        setStatus('Wrong! ❌😢');
         setAnimateStatus('wrong');
         setTimeout(() => setAnimateStatus(''), 2000);
       }
