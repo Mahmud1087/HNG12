@@ -29,18 +29,28 @@ const ColorGame = () => {
   const [showModal, setShowModal] = useState(false);
   const [animateStatus, setAnimateStatus] = useState('');
   const [animateModal, setAnimateModal] = useState(false);
+  const [difficulty, setDifficulty] = useState('easy');
 
   useEffect(() => {
     generateOptions();
-  }, [targetColor]);
+  }, [targetColor, difficulty]);
 
   const generateOptions = () => {
     let colors = [targetColor];
 
+    const difficultyLevels = {
+      easy: 20,
+      intermediate: 12,
+      hard: 6,
+      advanced: 2,
+    };
+
+    const variation = difficultyLevels[difficulty];
     const numShades = 5;
+
     for (let i = 1; i <= numShades; i++) {
-      const lighter = adjustColorBrightness(targetColor, i * 30);
-      const darker = adjustColorBrightness(targetColor, -i * 30);
+      const lighter = adjustColorBrightness(targetColor, i * variation);
+      const darker = adjustColorBrightness(targetColor, -i * variation);
       if (!colors.includes(lighter)) colors.push(lighter);
       if (!colors.includes(darker)) colors.push(darker);
     }
@@ -100,6 +110,22 @@ const ColorGame = () => {
             Rounds: {10 - (rounds - 1)}/{10}
           </p>
         </section>
+
+        {/* Difficulty Selection */}
+        <div className='difficulty-selector'>
+          <label htmlFor='difficulty'>Difficulty:</label>
+          <select
+            id='difficulty'
+            value={difficulty}
+            onChange={(e) => setDifficulty(e.target.value)}
+          >
+            <option value='easy'>Easy</option>
+            <option value='intermediate'>Intermediate</option>
+            <option value='hard'>Hard</option>
+            <option value='advanced'>Advanced</option>
+          </select>
+        </div>
+
         <div className='colors'>
           <div
             className='color-box'
@@ -136,6 +162,13 @@ const ColorGame = () => {
           <div className={`modal ${animateModal ? 'show' : ''}`}>
             <div className='modal-content'>
               <h2>Game Over!</h2>
+              <p>
+                {score <= 4
+                  ? 'See as you don use garri blind your eye 😂😂'
+                  : score > 4 && score <= 7
+                  ? 'Well, you tried sha. Your garri level is OK 🙂🙂'
+                  : 'Awwwn, rich kid wey no de drink garri. Your eye still clear 🤗👏'}
+              </p>
               <p>Your final score: {score}</p>
               <button onClick={resetGame} className='new-game'>
                 New Game
