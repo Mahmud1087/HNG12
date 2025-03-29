@@ -11,11 +11,11 @@ import { useConvexAuth } from "convex/react";
 export const sidebarItems = [
   {
     name: "Favorites",
-    href: "/favorites",
+    href: "/dashboard/favorites",
   },
   {
     name: "Bookmarks",
-    href: "/bookmarks",
+    href: "/dashboard/bookmarks",
   },
 ];
 

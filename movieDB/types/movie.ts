@@ -1,3 +1,5 @@
+import { Id } from "@/convex/_generated/dataModel";
+
 export type Movie = {
   adult: boolean;
   backdrop_path: string;
@@ -113,4 +115,28 @@ export type Credits = {
   id: number;
   cast: Cast[];
   crew: Crew[];
+};
+
+export type ConvexMovieType = {
+  id: number;
+  title: string;
+  poster_path: string;
+};
+
+export type ConvexFavReturnType = {
+  _id: Id<"favorites">;
+  id: number;
+  userId: Id<"users">;
+  _creationTime: number;
+  title: string;
+  poster_path: string;
+};
+
+export type ConvexBookmarkReturnType = {
+  _id: Id<"bookmarks">;
+  id: number;
+  userId: Id<"users">;
+  _creationTime: number;
+  title: string;
+  poster_path: string;
 };

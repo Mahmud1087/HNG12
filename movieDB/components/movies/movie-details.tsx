@@ -1,10 +1,9 @@
 "use client";
 
 import { useMovieQuerySingle } from "@/actions/movies";
-import { MovieDetail, Video } from "@/types/movie";
+import { ConvexMovieType, MovieDetail, Video } from "@/types/movie";
 import {
   ArrowLeftOutlined,
-  BookFilled,
   CalendarFilled,
   ClockCircleFilled,
   PlayCircleFilled,
@@ -14,24 +13,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { CastSection } from "./casts";
+import ActionButtons from "./action-buttons";
 
 const MovieDetails = ({ id }: { id: number | string }) => {
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
-  const handleFavorite = () => {
-    setIsFavorited(!isFavorited);
-    // Here you would add logic to save to user's favorites
-  };
-
-  const handleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    // Here you would add logic to save to user's bookmarks
-  };
 
   const { data: movieData, isLoading: loadingMovie } =
     useMovieQuerySingle<MovieDetail>(`/movie/${id}`);
+
+  const data: ConvexMovieType = {
+    id: movieData?.id as number,
+    title: movieData?.title as string,
+    poster_path: movieData?.poster_path as string,
+  };
 
   const { data: videosData, isLoading: loadingVideos } =
     useMovieQuerySingle<Video>(`/movie/${id}/videos`);
@@ -76,9 +70,8 @@ const MovieDetails = ({ id }: { id: number | string }) => {
 
   return (
     <div className="min-h-screen bg-[#efe1ba] text-[#172957]">
-      {/* Hero Section with Backdrop */}
       <div className="relative h-96 md:h-[500px] w-full">
-        <div className="absolute inset-0 bg-blue-950/70 z-10"></div>
+        <div className="absolute inset-0 bg-blue-950/80 z-10"></div>
         {movieData.backdrop_path ? (
           <Image
             src={`https://image.tmdb.org/t/p/original${movieData.backdrop_path}`}
@@ -103,10 +96,10 @@ const MovieDetails = ({ id }: { id: number | string }) => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 py-8 -mt-36 relative z-20">
+      <div className="max-w-6xl mx-auto md:px-4 py-8 -mt-36 relative z-20">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Poster */}
-          <div className="w-full md:w-1/3 flex-shrink-0">
+          <div className="w-full px-4 md:px-0 md:w-1/3 flex-shrink-0">
             <div className="rounded-lg overflow-hidden shadow-xl bg-blue-950/20 backdrop-blur-sm">
               {movieData.poster_path ? (
                 <Image
@@ -127,11 +120,11 @@ const MovieDetails = ({ id }: { id: number | string }) => {
           {/* Movie Details */}
           <div className="w-full md:w-2/3">
             <div className="bg-blue-950 rounded-lg p-6 shadow-xl text-white">
-              <h1 className="text-3xl md:text-4xl font-bold mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold mb-2">
                 {movieData.title}
               </h1>
               {movieData.tagline && (
-                <p className="text-lg italic text-[#efe1ba] mb-4">
+                <p className="text-lg italic text-blue-950 bg-amber-300 mb-4">
                   {movieData.tagline}
                 </p>
               )}
@@ -173,7 +166,7 @@ const MovieDetails = ({ id }: { id: number | string }) => {
                     {movieData.genres.map((genre) => (
                       <span
                         key={genre.id}
-                        className="px-3 py-1 bg-[#172957] border border-[#efe1ba]/30 rounded-full text-sm"
+                        className="px-3 py-1 text-blue-950 bg-amber-100 border border-[#efe1ba]/30 rounded-full text-sm"
                       >
                         {genre.name}
                       </span>
@@ -185,7 +178,7 @@ const MovieDetails = ({ id }: { id: number | string }) => {
               {/* Overview */}
               <div className="mb-8">
                 <h2 className="text-xl font-semibold mb-2">Overview</h2>
-                <p className="text-white/90 leading-relaxed">
+                <p className="text-white/90 leading-relaxed text-sm md:text-base">
                   {movieData.overview}
                 </p>
               </div>
@@ -197,7 +190,7 @@ const MovieDetails = ({ id }: { id: number | string }) => {
                     <h3 className="text-lg font-semibold text-[#efe1ba] mb-1">
                       Studios
                     </h3>
-                    <p>
+                    <p className="text-sm md:text-base">
                       {movieData.production_companies
                         .map((c) => c.name)
                         .join(", ")}
@@ -209,7 +202,7 @@ const MovieDetails = ({ id }: { id: number | string }) => {
                     <h3 className="text-lg font-semibold text-[#efe1ba] mb-1">
                       Languages
                     </h3>
-                    <p>
+                    <p className="text-sm md:text-base">
                       {movieData.spoken_languages
                         .map((l) => l.english_name)
                         .join(", ")}
@@ -270,28 +263,7 @@ const MovieDetails = ({ id }: { id: number | string }) => {
         <div className="mt-12">
           <CastSection movieId={id} />
         </div>
-
-        <div className="flex gap-3 mt-5 w-full justify-end">
-          <button
-            onClick={handleFavorite}
-            className="w-10 h-10 rounded-full bg-[#172957] hover:bg-[#172957]/80 flex items-center justify-center transition-colors"
-            aria-label="Add to favorites"
-          >
-            <StarFilled
-              size={20}
-              className={`${isFavorited ? "fill-[#efe1ba] text-[#efe1ba]" : "text-[#efe1ba]"}`}
-            />
-          </button>
-          <button
-            onClick={handleBookmark}
-            className="w-10 h-10 rounded-full bg-[#172957] hover:bg-[#172957]/80 flex items-center justify-center transition-colors"
-            aria-label="Bookmark"
-          >
-            <BookFilled
-              className={`${isBookmarked ? "fill-[#efe1ba] text-[#efe1ba]" : "text-[#efe1ba]"}`}
-            />
-          </button>
-        </div>
+        <ActionButtons data={data} />
       </div>
     </div>
   );

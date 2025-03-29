@@ -13,7 +13,7 @@ const MovieList = ({
   loading,
 }: {
   movies: Movie[];
-  loading: boolean;
+  loading?: boolean;
 }) => {
   const router = useRouter();
   const { isAuthenticated } = useConvexAuth();

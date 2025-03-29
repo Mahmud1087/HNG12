@@ -10,13 +10,20 @@ export default defineSchema({
   numbers: defineTable({
     value: v.number(),
   }),
-  movies: defineTable({
-    tmdbId: v.number(),
+  favorites: defineTable({
+    userId: v.id("users"),
+    id: v.number(),
     title: v.string(),
-    posterPath: v.string(),
-    overview: v.string(),
-    releaseDate: v.string(),
-    isFavourite: v.boolean(),
-    isBookMarked: v.boolean(),
-  }).index("by_tmdbId", ["tmdbId"]),
+    poster_path: v.string(),
+  })
+    .index("by_user_id", ["userId", "id"])
+    .index("by_user", ["userId"]),
+  bookmarks: defineTable({
+    userId: v.id("users"),
+    id: v.number(),
+    title: v.string(),
+    poster_path: v.string(),
+  })
+    .index("by_user_id", ["userId", "id"])
+    .index("by_user", ["userId"]),
 });

@@ -15,13 +15,13 @@ export function CastSection({ movieId }: { movieId: number | string }) {
       <div className="bg-blue-950 rounded-lg p-6 text-white shadow-xl">
         <h2 className="text-2xl font-bold mb-6">Top Cast</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {Array(5)
+          {Array(6)
             .fill(0)
             .map((_, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="w-full aspect-square rounded-full bg-[#172957] animate-pulse overflow-hidden mb-2"></div>
-                <div className="h-4 w-24 bg-[#172957] animate-pulse rounded mb-2"></div>
-                <div className="h-3 w-16 bg-[#172957] animate-pulse rounded"></div>
+                <div className="w-full aspect-square rounded-full bg-blue-900 animate-pulse overflow-hidden mb-2"></div>
+                <div className="h-4 w-6 bg-blue-900 animate-pulse rounded mb-2"></div>
+                <div className="h-3 w-24 bg-blue-900 animate-pulse rounded"></div>
               </div>
             ))}
         </div>

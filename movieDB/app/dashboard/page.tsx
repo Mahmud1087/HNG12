@@ -1,4 +1,10 @@
+import Home from "@/components/movies/movies";
+
 const Page = () => {
-  return <div>Page</div>;
+  return (
+    <div>
+      <Home />
+    </div>
+  );
 };
 export default Page;

@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <>
       {pathname !== "/signin" && (
-        <header className="sticky top-0 z-10 bg-background py-4 border-b border-blue-900 flex flex-row justify-between items-center">
+        <header className="sticky top-0 z-50 bg-background py-4 border-b border-blue-900 flex flex-row justify-between items-center">
           <div>
             <section className="md:hidden">
               <MobileSidebar />
