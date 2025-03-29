@@ -15,7 +15,7 @@ const Page = () => {
   const { setMovieId } = useAppContext();
 
   return (
-    <main className="flex flex-col gap-8">
+    <main className="flex flex-col gap-8 mb-10">
       {bookmarks?.length === 0 ? (
         <div className="h-[85vh] w-full flex flex-col items-center justify-center">
           <p className="mb-7 text-2xl italic">No movie in your bookmark</p>
@@ -58,6 +58,12 @@ const Page = () => {
               );
             })}
           </div>
+          {/* <button
+        className={`"bg-red-500" rounded-md px-2 py-1 text-white text-sm w-full cursor-pointer`}
+        onClick={() => { }}
+      >
+        Remove
+      </button> */}
         </section>
       )}
     </main>

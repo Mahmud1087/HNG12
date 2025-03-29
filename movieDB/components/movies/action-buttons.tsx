@@ -12,6 +12,7 @@ const ActionButtons = ({ data }: { data: ConvexMovieType }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { open } = useToastContext();
   const addToFav = useMutation(api.movie.toggleFavorites);
+  const addToBookmark = useMutation(api.movie.toggleBookmarks);
 
   const handleFavorite = async () => {
     try {
@@ -31,8 +32,8 @@ const ActionButtons = ({ data }: { data: ConvexMovieType }) => {
 
   const handleBookmark = async () => {
     try {
-      setIsBookmarked(!isFavorited);
-      const res = await addToFav(data);
+      setIsBookmarked(!isBookmarked);
+      const res = await addToBookmark(data);
       open({
         message: res,
         type: "success",
@@ -46,7 +47,7 @@ const ActionButtons = ({ data }: { data: ConvexMovieType }) => {
   };
 
   return (
-    <div className="flex gap-3 mt-5 w-full justify-end">
+    <div className="flex gap-3 my-5 w-full justify-end">
       <button
         onClick={handleFavorite}
         className={`py-1.5 px-3.5 rounded-md cursor-pointer bg-blue-500 flex items-center justify-center transition-colors ${isFavorited ? "text-yellow-400" : "text-white"}`}
