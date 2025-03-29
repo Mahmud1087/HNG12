@@ -3,11 +3,10 @@
 import { Flex, Input } from "antd";
 import Logo from "./logo";
 import MobileSidebar, { sidebarItems } from "./sidebar";
-import { SignOutButton } from "./sign-out";
 import Link from "next/link";
 import { useConvexAuth } from "convex/react";
-import { SignInButton } from "./sign-in";
 import { usePathname } from "next/navigation";
+import { AuthButton } from "./auth-button";
 
 const Navbar = () => {
   const { isAuthenticated } = useConvexAuth();
@@ -43,8 +42,7 @@ const Navbar = () => {
           <Flex gap={10} align="center" className="">
             <Input.Search placeholder="Search by name..." />
             <div className="hidden w-full md:w-[50%] md:block">
-              <SignOutButton />
-              <SignInButton />
+              <AuthButton />
             </div>
           </Flex>
         </header>

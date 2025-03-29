@@ -4,9 +4,8 @@ import { CloseOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Drawer, Flex } from "antd";
 import Link from "next/link";
 import { useState } from "react";
-import { SignOutButton } from "./sign-out";
+import { AuthButton } from "./auth-button";
 import Logo from "./logo";
-import { SignInButton } from "./sign-in";
 import { useConvexAuth } from "convex/react";
 
 export const sidebarItems = [
@@ -60,8 +59,7 @@ const MobileSidebar = () => {
             </Flex>
           )}
           <div className="mt-10 w-full flex flex-col gap-4 md:w-[50%]">
-            <SignOutButton />
-            <SignInButton close={closeDrawer} />
+            <AuthButton close={closeDrawer} />
           </div>
         </Flex>
       </Drawer>

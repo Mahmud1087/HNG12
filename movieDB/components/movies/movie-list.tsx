@@ -2,6 +2,7 @@
 
 import { useAppContext } from "@/store";
 import { Movie } from "@/types/movie";
+import { TMDB_IMAGE_BASE_URL } from "@/utils/constants";
 import { Skeleton } from "antd";
 import { useConvexAuth } from "convex/react";
 import Image from "next/image";
@@ -30,21 +31,25 @@ const MovieList = ({
           ))}
         </div>
       ) : (
-        <div className="grid gap-6 cursor-pointer relative  md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 cursor-pointer md:grid-cols-2 lg:grid-cols-3">
           {movies.map((movie) => {
             return (
-              <div key={movie.id} className="w-full flex flex-col gap-2.5">
-                <div
-                  className="w-full h-full"
+              <div
+                key={crypto.randomUUID()}
+                className="w-full flex flex-col gap-2.5 relative hover:scale-105 transition-all delay-100 shadow-2xl"
+              >
+                <aside
+                  className="absolute top-0 left-0 w-full h-full hover:bg-black/50 transition-all delay-100"
                   onClick={() => {
                     setMovieId(isAuthenticated ? null : movie.id);
                     router.push(
                       isAuthenticated ? `/dashboard/${movie.id}` : "/signin",
                     );
                   }}
-                >
+                ></aside>
+                <div className="w-full h-full">
                   <Image
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
                     width={2000}
                     height={100}
                     alt={movie.title}
