@@ -30,12 +30,12 @@ const Page = () => {
       ) : (
         <section className="flex flex-col gap-8">
           <h1 className="text-2xl font-semibold text-center">My Bookmarks</h1>
-          <div className="grid gap-6 cursor-pointer md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {bookmarks?.map((movie) => {
               return (
                 <div
                   key={crypto.randomUUID()}
-                  className="w-full flex flex-col gap-2.5 relative hover:scale-105 transition-all delay-100 shadow-2xl"
+                  className="w-full flex flex-col gap-2.5 relative hover:scale-105 transition-all delay-100 shadow-2xl cursor-pointer"
                 >
                   <aside
                     className="absolute top-0 left-0 w-full h-full hover:bg-black/50 transition-all delay-100"
