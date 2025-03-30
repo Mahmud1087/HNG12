@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Input } from "antd";
+import { Flex } from "antd";
 import Logo from "./logo";
 import MobileSidebar, { sidebarItems } from "./sidebar";
 import Link from "next/link";
@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <>
       {pathname !== "/signin" && (
-        <header className="sticky top-0 z-50 bg-background py-4 border-b border-blue-900 flex flex-row justify-between items-center">
+        <header className="sticky top-0 z-50 bg-background py-4 border-b border-blue-900 flex flex-row justify-between items-center w-[90%] lg:w-[80%] mx-auto mb-10">
           <div>
             <section className="md:hidden">
               <MobileSidebar />
@@ -40,8 +40,8 @@ const Navbar = () => {
           )}
 
           <Flex gap={10} align="center" className="">
-            <Input.Search placeholder="Search by name..." />
-            <div className="hidden w-full md:w-[50%] md:block">
+            {/* <Input.Search placeholder="Search by name..." /> */}
+            <div className="w-full">
               <AuthButton />
             </div>
           </Flex>

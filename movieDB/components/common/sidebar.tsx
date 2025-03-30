@@ -4,7 +4,6 @@ import { CloseOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Drawer, Flex } from "antd";
 import Link from "next/link";
 import { useState } from "react";
-import { AuthButton } from "./auth-button";
 import Logo from "./logo";
 import { useConvexAuth } from "convex/react";
 
@@ -16,6 +15,10 @@ export const sidebarItems = [
   {
     name: "Bookmarks",
     href: "/dashboard/bookmarks",
+  },
+  {
+    name: "Settings",
+    href: "/dashboard/settings",
   },
 ];
 
@@ -48,7 +51,7 @@ const MobileSidebar = () => {
       >
         <Flex vertical className="h-[77vh] flex flex-col justify-between">
           {isAuthenticated && (
-            <Flex vertical align="center" gap={5}>
+            <Flex vertical align="center" gap={35}>
               {sidebarItems.map((item, i) => {
                 return (
                   <Link href={item.href} key={i} onClick={closeDrawer}>
@@ -58,9 +61,6 @@ const MobileSidebar = () => {
               })}
             </Flex>
           )}
-          <div className="mt-10 w-full flex flex-col gap-4 md:w-[50%]">
-            <AuthButton close={closeDrawer} />
-          </div>
         </Flex>
       </Drawer>
     </div>

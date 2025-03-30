@@ -4,21 +4,40 @@ import { useEffect, useState, useRef } from "react";
 import { useMovieQuery } from "@/actions/movies";
 import MovieList from "@/components/movies/movie-list";
 import { Movie } from "@/types/movie";
+import { Input } from "antd";
+import { useDebounce } from "@/hooks/use-debounce";
 
 export default function Home() {
   const [page, setPage] = useState(1);
   const [allMovies, setAllMovies] = useState<Movie[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const MAX_PAGES = 10;
 
+  // Use the debounce hook to delay updating the actual search term
+  const handleSearchChange = useDebounce((term: string) => {
+    console.log("searching...", term);
+    setDebouncedSearchTerm(term);
+    // Reset to page 1 when search term changes
+    setPage(1);
+    setHasMore(true);
+  }, 500); // 500ms debounce delay
+
   const { data: popularMovies, isLoading: loadingPopularMovies } =
-    useMovieQuery<Movie[]>("/discover/movie", {
-      sort_by: "popularity.desc",
-      page: page,
-    });
+    useMovieQuery<Movie[]>(
+      debouncedSearchTerm === "" ? "/discover/movie" : "/search/movie",
+      {
+        sort_by: "popularity.desc", // This should probably be fixed, not using searchName as sort_by
+        query: debouncedSearchTerm, // Use query parameter for search (check your API requirements)
+        page: page,
+      },
+      { staleTime: 60000 },
+      debouncedSearchTerm + page, // Combine search term and page for dependency
+    );
 
   useEffect(() => {
     if (popularMovies?.results) {
@@ -78,6 +97,20 @@ export default function Home() {
     <>
       <main className="flex flex-col gap-8">
         <section className="flex flex-col gap-8">
+          <div className="w-full flex items-center justify-center">
+            <aside className="w-full md:w-1/2">
+              <Input
+                placeholder="Search by name..."
+                value={searchInput}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  setSearchInput(newValue);
+                  handleSearchChange(newValue);
+                }}
+                size="large"
+              />
+            </aside>
+          </div>
           <h1 className="text-2xl font-semibold text-center">Movies</h1>
           <MovieList
             movies={allMovies}

@@ -39,8 +39,9 @@ export default function RootLayout({
           <ConvexClientProvider>
             <GlobalContextProvider>
               <ConfigProvider>
+                <Navbar />
+
                 <main className="container flex flex-col gap-8 w-[90%] lg:w-[75%] mx-auto">
-                  <Navbar />
                   {children}
                 </main>
               </ConfigProvider>
