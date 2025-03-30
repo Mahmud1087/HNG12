@@ -18,25 +18,22 @@ export default function Home() {
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const MAX_PAGES = 10;
 
-  // Use the debounce hook to delay updating the actual search term
   const handleSearchChange = useDebounce((term: string) => {
-    console.log("searching...", term);
     setDebouncedSearchTerm(term);
-    // Reset to page 1 when search term changes
     setPage(1);
     setHasMore(true);
-  }, 500); // 500ms debounce delay
+  });
 
   const { data: popularMovies, isLoading: loadingPopularMovies } =
     useMovieQuery<Movie[]>(
       debouncedSearchTerm === "" ? "/discover/movie" : "/search/movie",
       {
-        sort_by: "popularity.desc", // This should probably be fixed, not using searchName as sort_by
-        query: debouncedSearchTerm, // Use query parameter for search (check your API requirements)
+        sort_by: "popularity.desc",
+        query: debouncedSearchTerm,
         page: page,
       },
       { staleTime: 60000 },
-      debouncedSearchTerm + page, // Combine search term and page for dependency
+      debouncedSearchTerm + page,
     );
 
   useEffect(() => {

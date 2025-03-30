@@ -1,18 +1,53 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
-import { useAppContext } from "@/store";
+import { useAppContext, useToastContext } from "@/store";
 import { TMDB_IMAGE_BASE_URL } from "@/utils/constants";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import { useConvexAuth, useQuery } from "convex/react";
+import { useConvexAuth, useMutation, useQuery } from "convex/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Page = () => {
   const bookmarks = useQuery(api.movie.getBookmarks);
   const router = useRouter();
   const { isAuthenticated } = useConvexAuth();
   const { setMovieId } = useAppContext();
+  const removeFromBookmarks = useMutation(api.movie.removeFromBookmarks);
+  const { open } = useToastContext();
+  const [loading, setLoading] = useState(false);
+
+  const handleRemoveFromBookmark = async (id: number) => {
+    setLoading(true);
+    try {
+      const res = await removeFromBookmarks({ id });
+      if (res) {
+        open({
+          message: res,
+          type: "success",
+          duration: 5,
+        });
+      }
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Something went wrong",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!bookmarks) {
+    return (
+      <div className="min-h-screen bg-[#efe1ba] flex items-center justify-center">
+        <div className="animate-pulse text-[#172957] text-xl font-semibold">
+          <span className="loading loading-bars loading-xl"></span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="flex flex-col gap-8 mb-10">
@@ -33,37 +68,43 @@ const Page = () => {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {bookmarks?.map((movie) => {
               return (
-                <div
+                <section
                   key={crypto.randomUUID()}
-                  className="w-full flex flex-col gap-2.5 relative hover:scale-105 transition-all delay-100 shadow-2xl cursor-pointer"
+                  className="w-full p-3 rounded-md flex flex-col gap-2.5 shadow-2xl cursor-pointer"
                 >
-                  <aside
-                    className="absolute top-0 left-0 w-full h-full hover:bg-black/50 transition-all delay-100"
-                    onClick={() => {
-                      setMovieId(isAuthenticated ? null : movie.id);
-                      router.push(
-                        isAuthenticated ? `/dashboard/${movie.id}` : "/signin",
-                      );
-                    }}
-                  ></aside>
-                  <div className="w-full h-full">
-                    <Image
-                      src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
-                      width={2000}
-                      height={100}
-                      alt={movie.title}
-                    />
+                  <div className="relative">
+                    <aside
+                      className="absolute top-0 left-0 w-full h-full hover:bg-black/50 transition-all delay-100"
+                      onClick={() => {
+                        setMovieId(isAuthenticated ? null : movie.id);
+                        router.push(
+                          isAuthenticated
+                            ? `/dashboard/${movie.id}`
+                            : "/signin",
+                        );
+                      }}
+                    ></aside>
+                    <div className="w-full h-full">
+                      <Image
+                        src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
+                        width={2000}
+                        height={100}
+                        alt={movie.title}
+                      />
+                    </div>
                   </div>
-                </div>
+                  <button
+                    className={`bg-red-500 rounded-md px-2 py-1 text-white text-sm w-full cursor-pointer`}
+                    onClick={() => {
+                      handleRemoveFromBookmark(movie.id);
+                    }}
+                  >
+                    {loading ? <LoadingOutlined /> : "Remove"}
+                  </button>
+                </section>
               );
             })}
           </div>
-          {/* <button
-        className={`"bg-red-500" rounded-md px-2 py-1 text-white text-sm w-full cursor-pointer`}
-        onClick={() => { }}
-      >
-        Remove
-      </button> */}
         </section>
       )}
     </main>

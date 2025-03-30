@@ -108,3 +108,49 @@ export const getBookmarks = query({
     return bookmarks.reverse();
   },
 });
+
+export const removeFromBookmarks = mutation({
+  args: {
+    id: v.number(),
+  },
+
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (userId === null) {
+      throw new Error("User not authenticated");
+    }
+
+    const existing = await ctx.db
+      .query("bookmarks")
+      .withIndex("by_user_id", (q) => q.eq("userId", userId).eq("id", args.id))
+      .first();
+
+    if (existing) {
+      await ctx.db.delete(existing._id);
+      return "Removed from bookmark";
+    }
+  },
+});
+
+export const removeFromFav = mutation({
+  args: {
+    id: v.number(),
+  },
+
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (userId === null) {
+      throw new Error("User not authenticated");
+    }
+
+    const existing = await ctx.db
+      .query("favorites")
+      .withIndex("by_user_id", (q) => q.eq("userId", userId).eq("id", args.id))
+      .first();
+
+    if (existing) {
+      await ctx.db.delete(existing._id);
+      return "Removed from bookmark";
+    }
+  },
+});
