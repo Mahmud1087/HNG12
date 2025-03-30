@@ -96,7 +96,7 @@ const Page = () => {
             (!email && !name) ||
             (email === user?.email && name === user?.name)
           }
-          className="w-full mb-3.5 py-2 rounded-md bg-blue-600 text-white disabled:bg-blue-600/35 disabled:text-white"
+          className="w-full mb-3.5 py-2 rounded-md bg-blue-600 text-white cursor-pointer disabled:bg-blue-600/35 disabled:text-white"
           type="submit"
         >
           {loading ? <LoadingOutlined /> : "Save Changes"}

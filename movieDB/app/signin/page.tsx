@@ -129,7 +129,7 @@ export default function SignIn() {
             !password ||
             (flow === "signUp" && !confirmPassword)
           }
-          className="w-full mb-3.5 py-2 rounded-md bg-blue-600 text-white disabled:bg-blue-600/35 disabled:text-white"
+          className="w-full mb-3.5 py-2 rounded-md bg-blue-600 cursor-pointer text-white disabled:bg-blue-600/35 disabled:text-white"
           type="submit"
         >
           {loading ? (
