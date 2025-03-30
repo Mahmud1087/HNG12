@@ -24,7 +24,7 @@ const ToastProvider: React.FC<{
   const [api, contextHolder] = message.useMessage();
 
   const open = React.useCallback(
-    ({ duration, message, type = "info" }: ToastContextHandlerType) => {
+    ({ duration = 5, message, type = "info" }: ToastContextHandlerType) => {
       api[type]({
         content: message,
         duration,

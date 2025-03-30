@@ -12,11 +12,10 @@ export function AuthButton() {
   return (
     <>
       <button
-        className={`relative z-40 ${isAuthenticated ? "bg-red-500" : "bg-blue-500"} rounded-md px-2 py-1 text-white text-sm w-full cursor-pointer ${!isAuthenticated ? "hidden" : "block"}`}
+        className={`relative z-40 ${isAuthenticated ? "bg-red-500" : "bg-blue-500"} rounded-md px-2 py-1 text-white text-sm w-full cursor-pointer`}
         onClick={() => {
           if (isAuthenticated) {
             void signOut();
-            router.push("/signin");
           } else {
             router.push("/signin");
           }

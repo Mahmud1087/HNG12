@@ -1,3 +1,5 @@
+"use client";
+
 import { api } from "@/convex/_generated/api";
 import { Dropdown, MenuProps, Space } from "antd";
 import { useConvexAuth, useQuery } from "convex/react";
@@ -6,8 +8,8 @@ import { AuthButton } from "./auth-button";
 import { UserOutlined } from "@ant-design/icons";
 
 const UserButton = () => {
-  const user = useQuery(api.user.getUserDetails);
   const { isAuthenticated } = useConvexAuth();
+  const user = useQuery(api.user.getUserDetails);
 
   const items: MenuProps["items"] = [
     {
@@ -28,26 +30,34 @@ const UserButton = () => {
       type: "divider",
     },
     {
-      label: <AuthButton />,
+      label: (
+        <div className="w-[9rem] md:w-[12rem]">
+          <AuthButton />
+        </div>
+      ),
       key: "1",
     },
   ];
 
   return (
     <>
-      <Dropdown menu={{ items }} trigger={["click"]}>
-        <Space>
-          {isAuthenticated && user && user.name ? (
+      {isAuthenticated ? (
+        <Dropdown menu={{ items }} trigger={["click"]}>
+          <Space>
             <aside className="h-7 w-7 rounded-full bg-blue-900 flex items-center justify-center text-white cursor-pointer">
-              {user.name?.split("")[0].toUpperCase()}
+              {user?.name?.split("")[0].toUpperCase()}
             </aside>
-          ) : (
+          </Space>
+        </Dropdown>
+      ) : (
+        <Dropdown menu={{ items }} trigger={["click"]}>
+          <Space>
             <aside className="h-7 w-7 rounded-full bg-blue-900 flex items-center justify-center text-white cursor-pointer">
               <UserOutlined />
             </aside>
-          )}
-        </Space>
-      </Dropdown>
+          </Space>
+        </Dropdown>
+      )}
     </>
   );
 };

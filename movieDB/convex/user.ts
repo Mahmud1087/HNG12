@@ -6,11 +6,15 @@ export const getUserDetails = query({
   args: {},
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
-    if (userId === null) {
-      throw new Error("User not authenticated");
+
+    if (!userId) {
+      return null;
     }
 
-    const user = await ctx.db.query("users").withIndex("email").first();
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("_id"), userId))
+      .first();
 
     return user;
   },
