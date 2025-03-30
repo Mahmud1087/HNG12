@@ -16,10 +16,6 @@ export const sidebarItems = [
     name: "Bookmarks",
     href: "/dashboard/bookmarks",
   },
-  {
-    name: "Settings",
-    href: "/dashboard/settings",
-  },
 ];
 
 const MobileSidebar = () => {

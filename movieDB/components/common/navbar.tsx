@@ -6,7 +6,7 @@ import MobileSidebar, { sidebarItems } from "./sidebar";
 import Link from "next/link";
 import { useConvexAuth } from "convex/react";
 import { usePathname } from "next/navigation";
-import { AuthButton } from "./auth-button";
+import UserButton from "./user-button";
 
 const Navbar = () => {
   const { isAuthenticated } = useConvexAuth();
@@ -40,9 +40,8 @@ const Navbar = () => {
           )}
 
           <Flex gap={10} align="center" className="">
-            {/* <Input.Search placeholder="Search by name..." /> */}
             <div className="w-full">
-              <AuthButton />
+              <UserButton />
             </div>
           </Flex>
         </header>
