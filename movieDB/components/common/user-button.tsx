@@ -5,7 +5,7 @@ import { Dropdown, MenuProps, Space } from "antd";
 import { useConvexAuth, useQuery } from "convex/react";
 import Link from "next/link";
 import { AuthButton } from "./auth-button";
-import { UserOutlined } from "@ant-design/icons";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
 const UserButton = () => {
   const { isAuthenticated } = useConvexAuth();
@@ -43,10 +43,14 @@ const UserButton = () => {
     <>
       {isAuthenticated ? (
         <Dropdown menu={{ items }} trigger={["click"]}>
-          <Space>
+          <Space className="cursor-pointer">
             <aside className="h-7 w-7 rounded-full bg-blue-900 flex items-center justify-center text-white cursor-pointer">
               {user?.name?.split("")[0].toUpperCase()}
             </aside>
+            <p className="hidden text-sm md:block">{user?.email}</p>
+            <p className="text-xs">
+              <DownOutlined />
+            </p>
           </Space>
         </Dropdown>
       ) : (
